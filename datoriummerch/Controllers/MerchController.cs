@@ -15,9 +15,15 @@ namespace datoriummerch.Controllers
         }
 
         [HttpGet("ok")]
-        public ActionResult<string> GetMerch()
+        public ActionResult<string> GetOk()
         {
             return "OK";
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Merch>> GetMerch()
+        {
+            return _dbContext.Merches.ToList();
         }
     }
 }

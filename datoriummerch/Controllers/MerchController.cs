@@ -5,7 +5,7 @@ namespace datoriummerch.Controllers
 {
     [Route("api/datorium-merch")]
     [ApiController]
-    public class MerchController
+    public class MerchController : ControllerBase
     {
         private readonly MerchContext _dbContext;
 
@@ -24,6 +24,15 @@ namespace datoriummerch.Controllers
         public ActionResult<IEnumerable<Merch>> GetMerch()
         {
             return _dbContext.Merches.ToList();
+        }
+
+        [HttpPost]
+        public ActionResult PostMerch(Merch merch)
+        {
+            _dbContext.Merches.Add(merch);
+            _dbContext.SaveChanges();
+
+            return Created();
         }
     }
 }

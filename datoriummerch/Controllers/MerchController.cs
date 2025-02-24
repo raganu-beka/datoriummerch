@@ -26,6 +26,20 @@ namespace datoriummerch.Controllers
             return _dbContext.Merches.ToList();
         }
 
+
+        [HttpGet("{id}")]
+        public ActionResult<Merch> GetMerchById(long id)
+        {
+            var merch = _dbContext.Merches.Find(id);
+
+            if (merch == null)
+            {
+                return NotFound();
+            }
+
+            return merch;
+        }
+
         [HttpPost]
         public ActionResult PostMerch(Merch merch)
         {

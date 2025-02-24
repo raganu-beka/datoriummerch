@@ -1,5 +1,6 @@
 ﻿using datoriummerch.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace datoriummerch.Controllers
 {
@@ -47,6 +48,31 @@ namespace datoriummerch.Controllers
             _dbContext.SaveChanges();
 
             return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateMerch(long id, Merch merch)
+        {
+            if (id != merch.Id)
+            {
+                return BadRequest();
+            }
+
+            var existingMerch = _dbContext.Merches.Find(id);
+
+            if (existingMerch == null)
+            {
+                return NotFound();
+            }
+
+            existingMerch.Stock = merch.Stock;
+            existingMerch.Price = merch.Price;
+            existingMerch.Name = merch.Name;
+            existingMerch.Color = merch.Color;
+
+            _dbContext.SaveChanges();
+
+            return NoContent();
         }
     }
 }

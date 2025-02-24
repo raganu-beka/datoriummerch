@@ -32,7 +32,7 @@ namespace datoriummerch.Controllers
             _dbContext.Merches.Add(merch);
             _dbContext.SaveChanges();
 
-            return Created();
+            return Ok();
         }
     }
 }

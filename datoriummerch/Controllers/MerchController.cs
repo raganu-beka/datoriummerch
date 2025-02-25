@@ -1,6 +1,7 @@
 ﻿using datoriummerch.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Permissions;
 
 namespace datoriummerch.Controllers
 {
@@ -73,6 +74,42 @@ namespace datoriummerch.Controllers
             _dbContext.SaveChanges();
 
             return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteMerch(long id)
+        {
+            var merch = _dbContext.Merches.Find(id);
+
+            if (merch == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Merches.Remove(merch);
+            _dbContext.SaveChanges();
+
+            return NoContent();
+        }
+
+
+        [HttpPost("buy/{id}")]
+        public ActionResult BuyMerch(long id)
+        {
+            var merch = _dbContext.Merches.Find(id);
+
+            if (merch == null)
+            {
+                return NotFound();
+            }
+
+            if (merch.Stock > 0)
+            {
+                merch.Stock = merch.Stock - 1;
+                _dbContext.SaveChanges();
+            }
+
+            return BadRequest();
         }
     }
 }
